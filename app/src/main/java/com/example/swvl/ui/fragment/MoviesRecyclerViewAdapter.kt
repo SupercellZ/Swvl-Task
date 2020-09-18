@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.swvl.R
-import com.example.swvl.pojo.Movie
+import com.example.swvl.data.pojo.Movie
 import com.example.swvl.utils.callbacks.functions.Function1
 
 class MoviesRecyclerViewAdapter(

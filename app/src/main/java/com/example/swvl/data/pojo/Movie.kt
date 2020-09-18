@@ -1,6 +1,6 @@
-package com.example.swvl.pojo
+package com.example.swvl.data.pojo
 
-import com.example.swvl.storage.database.model.MovieModel
+import com.example.swvl.data.source.database.model.MovieModel
 import java.io.Serializable
 
 data class Movie(

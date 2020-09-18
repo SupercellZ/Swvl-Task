@@ -1,4 +1,4 @@
-package com.example.swvl.storage.database
+package com.example.swvl.data.source.database
 
 import androidx.room.TypeConverter
 import java.util.*

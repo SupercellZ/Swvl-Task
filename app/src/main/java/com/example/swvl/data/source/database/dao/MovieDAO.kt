@@ -1,10 +1,10 @@
-package com.example.swvl.storage.database.dao
+package com.example.swvl.data.source.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.swvl.storage.database.model.MovieModel
+import com.example.swvl.data.source.database.model.MovieModel
 
 @Dao
 interface MovieDAO {

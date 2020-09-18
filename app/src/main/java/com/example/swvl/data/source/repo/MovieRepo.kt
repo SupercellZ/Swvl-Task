@@ -1,8 +1,8 @@
-package com.example.swvl.repo
+package com.example.swvl.data.source.repo
 
 import com.example.swvl.App
-import com.example.swvl.pojo.Movie
-import com.example.swvl.response.MovieResponse
+import com.example.swvl.data.pojo.Movie
+import com.example.swvl.data.response.MovieResponse
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

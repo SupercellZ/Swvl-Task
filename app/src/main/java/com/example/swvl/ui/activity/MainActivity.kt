@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.example.swvl.R
-import com.example.swvl.pojo.Movie
+import com.example.swvl.data.pojo.Movie
 import com.example.swvl.ui.viewModel.MainViewModel
 import com.example.swvl.utils.callbacks.OnTitleChange
 

@@ -1,8 +1,8 @@
-package com.example.swvl.storage.database.model
+package com.example.swvl.data.source.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.swvl.pojo.Movie
+import com.example.swvl.data.pojo.Movie
 
 
 @Entity(tableName = "Movie")

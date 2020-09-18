@@ -10,7 +10,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.swvl.R
-import com.example.swvl.pojo.Movie
+import com.example.swvl.data.pojo.Movie
 import com.example.swvl.ui.viewModel.MoviesViewModel
 import com.example.swvl.utils.callbacks.OnTitleChange
 import kotlinx.android.synthetic.main.movies_fragment.*

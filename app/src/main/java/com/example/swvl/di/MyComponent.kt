@@ -1,6 +1,6 @@
 package com.example.swvl.di
 
-import com.example.swvl.storage.database.AppDatabase
+import com.example.swvl.data.source.database.AppDatabase
 import dagger.Component
 import javax.inject.Singleton
 

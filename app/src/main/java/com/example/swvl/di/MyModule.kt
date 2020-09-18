@@ -3,7 +3,7 @@ package com.example.swvl.di
 import android.content.Context
 import androidx.room.Room
 import com.example.swvl.App
-import com.example.swvl.storage.database.AppDatabase
+import com.example.swvl.data.source.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
