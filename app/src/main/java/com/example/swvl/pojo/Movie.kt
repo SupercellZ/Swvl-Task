@@ -1,6 +1,7 @@
 package com.example.swvl.pojo
 
 import com.example.swvl.storage.database.model.MovieModel
+import java.io.Serializable
 
 data class Movie(
     val title: String,
@@ -8,7 +9,7 @@ data class Movie(
     val cast: List<String>,
     val genres: List<String>,
     val rating: Int
-) {
+) : Serializable {
     fun toMovieModel() : MovieModel {
         return MovieModel(
             title = this.title,
