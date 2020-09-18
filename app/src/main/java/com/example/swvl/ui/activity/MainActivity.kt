@@ -1,6 +1,7 @@
 package com.example.swvl.ui.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -8,8 +9,9 @@ import androidx.navigation.Navigation
 import com.example.swvl.R
 import com.example.swvl.pojo.Movie
 import com.example.swvl.ui.viewModel.MainViewModel
+import com.example.swvl.utils.callbacks.OnTitleChange
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , OnTitleChange {
 
     private lateinit var viewModel: MainViewModel
 
@@ -29,10 +31,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     private fun displayMovies(movies: List<Movie>) {
 
+    }
+
+    override fun newTitle(text: String, backVisible: Boolean) {
+        supportActionBar?.run {
+            title = text
+            setDisplayHomeAsUpEnabled(backVisible)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

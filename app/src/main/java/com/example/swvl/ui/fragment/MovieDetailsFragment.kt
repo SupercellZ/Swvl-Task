@@ -10,15 +10,13 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.swvl.R
 import com.example.swvl.pojo.Movie
+import com.example.swvl.ui.viewModel.MainViewModel
+import com.example.swvl.utils.callbacks.OnTitleChange
 import kotlinx.android.synthetic.main.movie_details_fragment.*
 
 class MovieDetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MovieDetailsFragment()
-    }
-
-    private lateinit var viewModel: MovieDetailsViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,9 +27,13 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         val movie = arguments?.get("movie") as Movie
+
+        with(activity as OnTitleChange) {
+            this.newTitle(movie.title, true)
+        }
 
         rating_tv.text = "${movie.rating.toFloat()}"
         materialRatingBar.rating = movie.rating.toFloat()

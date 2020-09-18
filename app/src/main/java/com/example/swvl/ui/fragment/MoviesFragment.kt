@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.swvl.R
 import com.example.swvl.pojo.Movie
 import com.example.swvl.ui.viewModel.MoviesViewModel
-import com.example.swvl.utils.functions.Function1
+import com.example.swvl.utils.callbacks.OnTitleChange
 import kotlinx.android.synthetic.main.movies_fragment.*
 
 /**
@@ -39,6 +39,10 @@ class MoviesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         setupViewModel()
+
+        with(activity as OnTitleChange) {
+            this.newTitle("Movies", false)
+        }
     }
 
 
@@ -70,7 +74,7 @@ class MoviesFragment : Fragment() {
 
     private fun setupAdapter(movies: List<Movie>) {
         recyclerView.adapter = MoviesRecyclerViewAdapter(
-            Function1 { input -> movieOnClick(input) },
+            this::movieOnClick,
             movies
         )
     }

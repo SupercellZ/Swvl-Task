@@ -1,4 +1,4 @@
-package com.example.swvl.utils.functions;
+package com.example.swvl.utils.callbacks.functions;
 
 import java.io.Serializable;
 
