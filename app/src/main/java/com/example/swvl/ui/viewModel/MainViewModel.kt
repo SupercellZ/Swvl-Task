@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.swvl.App
 import com.example.swvl.pojo.Movie
 import com.example.swvl.pojo.MovieResponse
+import com.example.swvl.repo.MovieRepo
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -34,14 +35,12 @@ class MainViewModel : ViewModel() {
         _loading.value = false;
     }
 
-    public fun loadMovies() {
+    fun loadMovies() {
         viewModelScope.launch {
             try {
                 showLoading()
 
-                if (_movies.value.isNullOrEmpty()) { //first time in LifeCycle to load
-
-                } //no need for 'else';
+                _movies.value = MovieRepo.loadMovies()
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -64,7 +63,8 @@ class MainViewModel : ViewModel() {
                 .add(KotlinJsonAdapterFactory())
                 .build()
 
-            val adapter: JsonAdapter<MovieResponse> = moshi.adapter<MovieResponse>(MovieResponse::class.java)
+            val adapter: JsonAdapter<MovieResponse> =
+                moshi.adapter<MovieResponse>(MovieResponse::class.java)
             val response = adapter.fromJson(jsonRaw)
 
         } catch (e: Exception) {
