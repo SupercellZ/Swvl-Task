@@ -1,6 +1,6 @@
 package com.example.swvl.pojo
 
-import com.example.swvl.storage.model.MovieModel
+import com.example.swvl.storage.database.model.MovieModel
 
 data class Movie(
     val title: String,

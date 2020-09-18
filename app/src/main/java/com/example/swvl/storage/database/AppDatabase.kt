@@ -1,10 +1,10 @@
-package com.example.swvl.storage
+package com.example.swvl.storage.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.swvl.storage.dao.MovieDAO
-import com.example.swvl.storage.model.MovieModel
+import com.example.swvl.storage.database.dao.MovieDAO
+import com.example.swvl.storage.database.model.MovieModel
 
 @Database(
     entities = [

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.swvl.App
 import com.example.swvl.pojo.Movie
-import com.example.swvl.pojo.MovieResponse
+import com.example.swvl.response.MovieResponse
 import com.example.swvl.repo.MovieRepo
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -64,7 +64,8 @@ class MainViewModel : ViewModel() {
                 .build()
 
             val adapter: JsonAdapter<MovieResponse> =
-                moshi.adapter<MovieResponse>(MovieResponse::class.java)
+                moshi.adapter<MovieResponse>(
+                    MovieResponse::class.java)
             val response = adapter.fromJson(jsonRaw)
 
         } catch (e: Exception) {

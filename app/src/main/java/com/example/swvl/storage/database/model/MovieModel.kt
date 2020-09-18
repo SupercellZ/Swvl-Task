@@ -1,4 +1,4 @@
-package com.example.swvl.storage.model
+package com.example.swvl.storage.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

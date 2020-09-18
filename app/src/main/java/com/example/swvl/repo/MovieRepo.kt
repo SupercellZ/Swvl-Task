@@ -2,7 +2,7 @@ package com.example.swvl.repo
 
 import com.example.swvl.App
 import com.example.swvl.pojo.Movie
-import com.example.swvl.pojo.MovieResponse
+import com.example.swvl.response.MovieResponse
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -58,7 +58,8 @@ class MovieRepo {
                     .build()
 
                 val adapter: JsonAdapter<MovieResponse> =
-                    moshi.adapter<MovieResponse>(MovieResponse::class.java)
+                    moshi.adapter<MovieResponse>(
+                        MovieResponse::class.java)
 
                 val response = adapter.fromJson(jsonRaw)
                 response?.run {//safety, should always be true
