@@ -1,9 +1,11 @@
 package com.example.swvl.ui.fragment
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
@@ -22,6 +24,8 @@ class MoviesFragment : BaseFragment() {
 
     private lateinit var viewModel: MoviesViewModel
 
+    private var rocketLaunched = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,12 +41,37 @@ class MoviesFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         runWithCaution({
+
+            setupRocket()
+
             setupToolbar("Movies", false)
 
             setupRecyclerView(1)
 
             setupViewModel()
         })
+    }
+
+    private fun setupRocket() {
+        if (rocketLaunched)
+            animation_view.visibility = View.GONE
+        else {
+            animation_view.postDelayed({
+                val valueAnimator = ValueAnimator()
+
+                valueAnimator.duration = 1_000
+
+                val height = (animation_view.parent as ConstraintLayout).height
+                valueAnimator.setIntValues(0, -height)
+                valueAnimator.addUpdateListener {
+                    animation_view.y = (valueAnimator.animatedValue as Int).toFloat()
+                    if (valueAnimator.animatedValue == -height)
+                        animation_view.visibility = View.GONE
+                }
+                valueAnimator.start()
+            }, 2_000)
+            rocketLaunched = true
+        }
     }
 
 

@@ -14,7 +14,7 @@ import com.example.swvl.utils.callbacks.OnTitleChange
 
 abstract class BaseFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    protected lateinit var recyclerView: RecyclerView
     private lateinit var baseViewModel: BaseViewModel
 
 
