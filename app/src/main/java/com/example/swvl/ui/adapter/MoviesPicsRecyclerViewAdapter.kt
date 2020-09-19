@@ -28,6 +28,7 @@ class MoviesPicsRecyclerViewAdapter(
         runWithCaution({
             Glide.with(holder.itemView.context)
                 .load(item)
+                .thumbnail(0.9f)
                 .placeholder(R.drawable.pic_loading)
                 .into(holder.picIV)
         })
