@@ -32,7 +32,7 @@ abstract class BaseFragment : Fragment() {
 
     fun setupViewModel(
         baseViewModel: BaseViewModel,
-        progressBar: ProgressBar
+        progressBar: View
     ) {
         this.baseViewModel = baseViewModel
 

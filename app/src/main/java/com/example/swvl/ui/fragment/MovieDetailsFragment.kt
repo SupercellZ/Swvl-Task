@@ -55,7 +55,7 @@ class MovieDetailsFragment : BaseFragment() {
     private fun setupViewModel() {
         viewModel = ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
 
-        super.setupViewModel(viewModel, progressBar)
+        super.setupViewModel(viewModel, animation_view)
 
         viewModel.picUrls.observe(viewLifecycleOwner) {
 
