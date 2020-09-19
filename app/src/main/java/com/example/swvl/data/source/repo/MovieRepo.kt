@@ -80,7 +80,7 @@ class MovieRepo {
             val result: MutableList<String> = arrayListOf()
 
             val movieService = MovieService.create()
-            val search = movieService.search(text = "beach")
+            val search = movieService.search(text = movieName)
 
             search.photosRoot?.photos?.forEach {
 

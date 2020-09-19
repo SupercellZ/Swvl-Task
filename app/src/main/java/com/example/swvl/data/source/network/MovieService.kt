@@ -19,7 +19,7 @@ interface MovieService {
 
         @Query("text") text: String,
 
-        @Query("per_page") perPage: Int = 4
+        @Query("per_page") perPage: Int = 20
     ): PhotosSearchResponse
 
     @GET(GET_METHOD_URL)
