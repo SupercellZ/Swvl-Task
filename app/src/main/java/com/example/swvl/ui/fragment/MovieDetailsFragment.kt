@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.swvl.R
 import com.example.swvl.data.pojo.Movie
 import com.example.swvl.ui.adapter.MoviesPicsRecyclerViewAdapter
@@ -49,7 +47,7 @@ class MovieDetailsFragment : BaseFragment() {
     }
 
     private fun getArgs() {
-        movie = arguments?.get("movie") as Movie
+        movie = MovieDetailsFragmentArgs.fromBundle(requireArguments()).movie
     }
 
     private fun setupViewModel() {
