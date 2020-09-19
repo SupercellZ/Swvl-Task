@@ -1,14 +1,12 @@
-package com.example.swvl.ui.fragment
+package com.example.swvl.base
 
 import android.view.View
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.swvl.R
-import com.example.swvl.ui.viewModel.BaseViewModel
 import com.example.swvl.utils.Utils.Companion.runWithCaution
 import com.example.swvl.utils.callbacks.OnTitleChange
 

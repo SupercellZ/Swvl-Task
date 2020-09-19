@@ -2,8 +2,8 @@ package com.example.swvl.ui.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.swvl.base.BaseViewModel
 import com.example.swvl.data.pojo.Movie
 import com.example.swvl.data.source.repo.MovieRepo
 import kotlinx.coroutines.launch

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.example.swvl.R
+import com.example.swvl.base.BaseFragment
 import com.example.swvl.data.pojo.Movie
 import com.example.swvl.ui.adapter.MoviesPicsRecyclerViewAdapter
 import com.example.swvl.ui.viewModel.MovieDetailsViewModel
