@@ -1,4 +1,4 @@
-package com.example.swvl.data.response
+package com.example.swvl.data.source.response
 
 import com.example.swvl.data.pojo.Movie
 

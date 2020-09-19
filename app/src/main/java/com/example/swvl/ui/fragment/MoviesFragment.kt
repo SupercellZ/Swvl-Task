@@ -8,10 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.swvl.R
 import com.example.swvl.data.pojo.Movie
+import com.example.swvl.ui.adapter.MoviesRecyclerViewAdapter
 import com.example.swvl.ui.viewModel.MoviesViewModel
+import com.example.swvl.utils.Utils
 import com.example.swvl.utils.callbacks.OnTitleChange
 import kotlinx.android.synthetic.main.movies_fragment.*
 
@@ -30,7 +33,9 @@ class MoviesFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.movies_fragment, container, false)
 
-        recyclerView = view.findViewById(R.id.recycler_view)
+        Utils.runWithCaution({
+            recyclerView = view.findViewById(R.id.recycler_view)
+        })
 
         return view
     }
@@ -73,10 +78,12 @@ class MoviesFragment : Fragment() {
     }
 
     private fun setupAdapter(movies: List<Movie>) {
-        recyclerView.adapter = MoviesRecyclerViewAdapter(
-            this::movieOnClick,
-            movies
-        )
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter =
+            MoviesRecyclerViewAdapter(
+                this::movieOnClick,
+                movies
+            )
     }
 
     private fun movieOnClick(movie: Movie) {

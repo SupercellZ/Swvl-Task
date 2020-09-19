@@ -8,8 +8,9 @@ buildscript {
     ext.room = "2.2.5"
     ext.dagger = "2.27"
     ext.dagger_compiler = "2.24"
-    ext.glide = "4.9.0"
+    ext.glide = "4.11.0"
     ext.nav_version = "2.3.0"
+    ext.retrofit = "2.9.0"
 
     repositories {
         google()

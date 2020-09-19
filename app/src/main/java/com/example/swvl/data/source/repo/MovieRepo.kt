@@ -2,10 +2,10 @@ package com.example.swvl.data.source.repo
 
 import com.example.swvl.App
 import com.example.swvl.data.pojo.Movie
-import com.example.swvl.data.response.MovieResponse
+import com.example.swvl.data.source.network.MovieService
+import com.example.swvl.data.source.response.MovieResponse
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -54,12 +54,12 @@ class MovieRepo {
                 val jsonRaw = String(buffer)
 
                 val moshi = Moshi.Builder()
-                    .add(KotlinJsonAdapterFactory())
                     .build()
 
                 val adapter: JsonAdapter<MovieResponse> =
                     moshi.adapter<MovieResponse>(
-                        MovieResponse::class.java)
+                        MovieResponse::class.java
+                    )
 
                 val response = adapter.fromJson(jsonRaw)
                 response?.run {//safety, should always be true
@@ -72,6 +72,34 @@ class MovieRepo {
             }
 
             return movies
+        }
+
+
+        suspend fun loadPicUrls(movieName: String): MutableList<String> {
+
+            val result: MutableList<String> = arrayListOf()
+
+            val movieService = MovieService.create()
+            val search = movieService.search(text = "beach")
+
+            search.photosRoot?.photos?.forEach {
+
+                val url = it.id?.run {
+                    //catching in order to skip whoever fails and proceed to the next photo
+                    try {
+                        val sizes = movieService.getSizes(photoId = this)
+                        sizes.photoSizes?.getUrl()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        ""
+                    }
+                }
+                url?.run {
+                    result.add(url)
+                }
+            }
+
+            return result
         }
 
     }
