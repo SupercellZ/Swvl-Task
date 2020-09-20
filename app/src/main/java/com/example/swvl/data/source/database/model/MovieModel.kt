@@ -14,7 +14,7 @@ data class MovieModel(
     val genres: List<String>,
     val rating: Int
 ) {
-    fun toMovie() : Movie {
+    fun toMovie(): Movie {
         return Movie(
             title = this.title,
             year = this.year,
@@ -22,5 +22,16 @@ data class MovieModel(
             genres = this.genres,
             rating = this.rating
         )
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is MovieModel) {
+            return title == other.title
+                    && year == other.year
+                    && cast == other.cast
+                    && genres == other.genres
+                    && rating == other.rating
+        }
+        return super.equals(other)
     }
 }

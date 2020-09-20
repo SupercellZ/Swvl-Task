@@ -11,9 +11,9 @@ import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.example.swvl.App
 import com.example.swvl.R
-import com.example.swvl.base.BaseFragment
 import com.example.swvl.data.pojo.Movie
 import com.example.swvl.ui.adapter.MoviesRecyclerViewAdapter
+import com.example.swvl.ui.base.BaseFragment
 import com.example.swvl.ui.viewModel.MoviesViewModel
 import com.example.swvl.ui.viewModel.factory.MoviesViewModelFactory
 import com.example.swvl.utils.Utils.Companion.runWithCaution
@@ -80,7 +80,8 @@ class MoviesFragment : BaseFragment() {
 
     private fun setupViewModel() {
         val movieRepo = App.app.getMyComponent().getMovieRepo()
-        viewModel = ViewModelProvider(this,
+        viewModel = ViewModelProvider(
+            this,
             MoviesViewModelFactory(
                 movieRepo
             )
