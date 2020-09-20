@@ -1,4 +1,4 @@
-package com.example.swvl.base
+package com.example.swvl.ui.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

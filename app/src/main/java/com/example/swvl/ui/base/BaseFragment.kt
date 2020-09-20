@@ -1,4 +1,4 @@
-package com.example.swvl.base
+package com.example.swvl.ui.base
 
 import android.view.View
 import androidx.fragment.app.Fragment
