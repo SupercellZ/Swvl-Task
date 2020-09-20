@@ -85,22 +85,22 @@ class MovieRepo(
         val movieService = remoteDataSource.movieService
         val search = movieService.search(text = movieName)
 
-//        search.photosRoot?.photos?.forEach {
-//
-//            val url = it.id?.run {
-//                //catching in order to skip whoever fails and proceed to the next photo
-//                try {
-//                    val sizes = movieService.getSizes(photoId = this)
-//                    sizes.photoSizes?.getUrl()
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                    ""
-//                }
-//            }
-//            url?.run {
-//                result.add(url)
-//            }
-//        }
+        search.photosRoot?.photos?.forEach {
+
+            val url = it.id?.run {
+                //catching in order to skip whoever fails and proceed to the next photo
+                try {
+                    val sizes = movieService.getSizes(photoId = this)
+                    sizes.photoSizes?.getUrl()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ""
+                }
+            }
+            url?.run {
+                result.add(url)
+            }
+        }
 
         return result
     }
