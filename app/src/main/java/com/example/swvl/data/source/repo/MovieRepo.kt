@@ -2,105 +2,106 @@ package com.example.swvl.data.source.repo
 
 import com.example.swvl.App
 import com.example.swvl.data.pojo.Movie
+import com.example.swvl.data.source.database.LocalDataSource
 import com.example.swvl.data.source.network.MovieService
+import com.example.swvl.data.source.network.RemoteDataSource
 import com.example.swvl.data.source.response.MovieResponse
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MovieRepo {
+class MovieRepo(
+    private val localDataSource: LocalDataSource,
+    private val remoteDataSource: RemoteDataSource
+) {
 
-    companion object {
+    suspend fun loadMovies(): List<Movie> {
+        val result: MutableList<Movie> = arrayListOf()
 
-        suspend fun loadMovies(): List<Movie> {
-            val result: MutableList<Movie> = arrayListOf()
+        withContext(Dispatchers.IO) {
+            val database = localDataSource.database
+            val movieDAO = database.getMovieDAO()
+            var dbMovies = movieDAO.getAllMovies()
 
-            withContext(Dispatchers.IO) {
-                val database = App.app.getMyComponent().getAppDatabase()
-                val movieDAO = database.getMovieDAO()
-                var dbMovies = movieDAO.getAllMovies()
+            if (dbMovies.isNullOrEmpty()) {
 
-                if (dbMovies.isNullOrEmpty()) {
+                //region app is running for first time
+                //load from Json file
+                val moviesFromJson = getMoviesFromJson()
 
-                    //region app is running for first time
-                    //load from Json file
-                    val moviesFromJson = getMoviesFromJson()
+                //map to DB Model
+                val movieModels = moviesFromJson.map { it.toMovieModel() }
 
-                    //map to DB Model
-                    val movieModels = moviesFromJson.map { it.toMovieModel() }
+                //insert into DB
+                movieDAO.insert(movieModels)
 
-                    //insert into DB
-                    movieDAO.insert(movieModels)
-
-                    dbMovies = movieModels
-                    //endregion
-                }
-
-                result.addAll(dbMovies.map { it.toMovie() })
+                dbMovies = movieModels
+                //endregion
             }
 
-            return result
+            result.addAll(dbMovies.map { it.toMovie() })
         }
 
-        private fun getMoviesFromJson(): List<Movie> {
-            val movies: MutableList<Movie> = arrayListOf()
-            try {
-                val inputStream = App.app.applicationContext.assets.open("movies.json")
-                val buffer = ByteArray(size = inputStream.available())
-                inputStream.read(buffer)
-                inputStream.close()
+        return result
+    }
 
-                val jsonRaw = String(buffer)
+    private fun getMoviesFromJson(): List<Movie> {
+        val movies: MutableList<Movie> = arrayListOf()
+        try {
+            val inputStream = App.app.applicationContext.assets.open("movies.json")
+            val buffer = ByteArray(size = inputStream.available())
+            inputStream.read(buffer)
+            inputStream.close()
 
-                val moshi = Moshi.Builder()
-                    .build()
+            val jsonRaw = String(buffer)
 
-                val adapter: JsonAdapter<MovieResponse> =
-                    moshi.adapter<MovieResponse>(
-                        MovieResponse::class.java
-                    )
+            val moshi = Moshi.Builder()
+                .build()
 
-                val response = adapter.fromJson(jsonRaw)
-                response?.run {//safety, should always be true
-                    movies.addAll(this.movies)
-                }
+            val adapter: JsonAdapter<MovieResponse> =
+                moshi.adapter<MovieResponse>(
+                    MovieResponse::class.java
+                )
 
-
-            } catch (e: Exception) {
-                e.printStackTrace()
+            val response = adapter.fromJson(jsonRaw)
+            response?.run {//safety, should always be true
+                movies.addAll(this.movies)
             }
 
-            return movies
+
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
+        return movies
+    }
 
-        suspend fun loadPicUrls(movieName: String): MutableList<String> {
 
-            val result: MutableList<String> = arrayListOf()
+    suspend fun loadPicUrls(movieName: String): MutableList<String> {
 
-            val movieService = MovieService.create()
-            val search = movieService.search(text = movieName)
+        val result: MutableList<String> = arrayListOf()
 
-            search.photosRoot?.photos?.forEach {
+        val movieService = remoteDataSource.movieService
+        val search = movieService.search(text = movieName)
 
-                val url = it.id?.run {
-                    //catching in order to skip whoever fails and proceed to the next photo
-                    try {
-                        val sizes = movieService.getSizes(photoId = this)
-                        sizes.photoSizes?.getUrl()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        ""
-                    }
-                }
-                url?.run {
-                    result.add(url)
+        search.photosRoot?.photos?.forEach {
+
+            val url = it.id?.run {
+                //catching in order to skip whoever fails and proceed to the next photo
+                try {
+                    val sizes = movieService.getSizes(photoId = this)
+                    sizes.photoSizes?.getUrl()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    ""
                 }
             }
-
-            return result
+            url?.run {
+                result.add(url)
+            }
         }
 
+        return result
     }
 }

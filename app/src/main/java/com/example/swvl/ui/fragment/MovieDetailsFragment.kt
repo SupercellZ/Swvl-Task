@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.example.swvl.App
 import com.example.swvl.R
-import com.example.swvl.base.BaseFragment
 import com.example.swvl.data.pojo.Movie
 import com.example.swvl.ui.adapter.MoviesPicsRecyclerViewAdapter
+import com.example.swvl.ui.base.BaseFragment
 import com.example.swvl.ui.viewModel.MovieDetailsViewModel
+import com.example.swvl.ui.viewModel.factory.MovieDetailsViewModelFactory
 import com.example.swvl.utils.Utils.Companion.runWithCaution
 import kotlinx.android.synthetic.main.movie_details_fragment.*
 
@@ -52,7 +55,13 @@ class MovieDetailsFragment : BaseFragment() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+        val movieRepo = App.app.getMyComponent().getMovieRepo()
+        viewModel = ViewModelProvider(
+            this,
+            MovieDetailsViewModelFactory(
+                movieRepo
+            )
+        ).get(MovieDetailsViewModel::class.java)
 
         super.setupViewModel(viewModel, animation_view)
 

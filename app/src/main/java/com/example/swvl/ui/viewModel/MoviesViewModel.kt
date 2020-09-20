@@ -3,12 +3,14 @@ package com.example.swvl.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.swvl.base.BaseViewModel
 import com.example.swvl.data.pojo.Movie
 import com.example.swvl.data.source.repo.MovieRepo
+import com.example.swvl.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class MoviesViewModel : BaseViewModel() {
+class MoviesViewModel(
+    private val movieRepo: MovieRepo
+) : BaseViewModel() {
 
     //region movies LivewData
     val movies: LiveData<List<Movie>>
@@ -21,7 +23,7 @@ class MoviesViewModel : BaseViewModel() {
             try {
                 showLoading()
 
-                _movies.value = MovieRepo.loadMovies()
+                _movies.value = movieRepo.loadMovies()
 
             } catch (e: Exception) {
                 e.printStackTrace()
