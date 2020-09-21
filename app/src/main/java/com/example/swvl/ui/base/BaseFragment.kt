@@ -7,18 +7,25 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.swvl.R
+import com.example.swvl.enums.FragType
 import com.example.swvl.utils.Utils.Companion.runWithCaution
-import com.example.swvl.utils.callbacks.OnTitleChange
+import com.example.swvl.utils.callbacks.ActivityComms
 
 abstract class BaseFragment : Fragment() {
 
-    protected lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var baseViewModel: BaseViewModel
 
 
-    fun setupToolbar(title: String, backVisible: Boolean) {
-        with(activity as OnTitleChange) {
-            this.newTitle(title, backVisible)
+    fun currentFrag(fragType: FragType, title: String = getString(R.string.movies)) {
+        with(activity as ActivityComms) {
+            currentFrag(fragType, title)
+        }
+    }
+
+    fun setupFilterMoviesCallback(filterMoviesCallback: (String) -> Unit) {
+        with(activity as ActivityComms) {
+            setupFilterCallback(filterMoviesCallback)
         }
     }
 

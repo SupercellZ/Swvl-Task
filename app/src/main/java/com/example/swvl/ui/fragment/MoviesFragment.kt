@@ -16,6 +16,7 @@ import com.example.swvl.ui.adapter.MoviesRecyclerViewAdapter
 import com.example.swvl.ui.base.BaseFragment
 import com.example.swvl.ui.viewModel.MoviesViewModel
 import com.example.swvl.ui.viewModel.factory.MoviesViewModelFactory
+import com.example.swvl.enums.FragType
 import com.example.swvl.utils.Utils.Companion.runWithCaution
 import kotlinx.android.synthetic.main.movies_fragment.*
 
@@ -26,6 +27,8 @@ import kotlinx.android.synthetic.main.movies_fragment.*
 class MoviesFragment : BaseFragment() {
 
     private lateinit var viewModel: MoviesViewModel
+
+    private lateinit var moviesAdapter: MoviesRecyclerViewAdapter
 
     private var rocketLaunched = false
 
@@ -47,11 +50,15 @@ class MoviesFragment : BaseFragment() {
 
             setupRocket()
 
-            setupToolbar("Movies", false)
+            currentFrag(FragType.Movies)
 
             setupRecyclerView(1)
 
             setupViewModel()
+
+            setupFilterMoviesCallback {
+                moviesAdapter.filter.filter(it)
+            }
         })
     }
 
@@ -93,12 +100,9 @@ class MoviesFragment : BaseFragment() {
         viewModel.movies.observe(viewLifecycleOwner) {
 
             //setup adapter
-            setupAdapter(
-                MoviesRecyclerViewAdapter(
-                    this::movieOnClick,
-                    it
-                )
-            )
+
+            moviesAdapter = MoviesRecyclerViewAdapter(this::movieOnClick, it.shuffled())
+            setupAdapter(moviesAdapter)
         }
 
         if (viewModel.movies.value.isNullOrEmpty()) //if viewModel is loading for the first time.
