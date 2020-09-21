@@ -23,14 +23,13 @@ import kotlinx.android.synthetic.main.movies_fragment.*
 /**
  * A fragment representing a list of Items.
  */
-//class MoviesFragment : Fragment() {
 class MoviesFragment : BaseFragment() {
 
     private lateinit var viewModel: MoviesViewModel
 
     private lateinit var moviesAdapter: MoviesRecyclerViewAdapter
 
-    private var rocketLaunched = false
+    private var rocketLaunched = false //used for initial Rocket animation
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +61,9 @@ class MoviesFragment : BaseFragment() {
         })
     }
 
+    /**
+     * used for setting up Rocket animation
+     */
     private fun setupRocket() {
         if (rocketLaunched)
             animation_view.visibility = View.GONE
@@ -79,13 +81,14 @@ class MoviesFragment : BaseFragment() {
                         animation_view.visibility = View.GONE
                 }
                 valueAnimator.start()
-            }, 2_000)
+            }, 2_000) //no need to wait for 2 secs coz loading is way faster than this, just thought it would look cool :D
             rocketLaunched = true
         }
     }
 
 
     private fun setupViewModel() {
+        //region initialize
         val movieRepo = App.app.getMyComponent().getMovieRepo()
         viewModel = ViewModelProvider(
             this,
@@ -93,15 +96,18 @@ class MoviesFragment : BaseFragment() {
                 movieRepo
             )
         ).get(MoviesViewModel::class.java)
+        //endregion
 
         super.setupViewModel(viewModel, progressBar)
 
-        //region movies
+        //region movies related
+
+        //display movies whenever they are updated
         viewModel.movies.observe(viewLifecycleOwner) {
 
             //setup adapter
 
-            moviesAdapter = MoviesRecyclerViewAdapter(this::movieOnClick, it.shuffled())
+            moviesAdapter = MoviesRecyclerViewAdapter(this::movieOnClick, it)
             setupAdapter(moviesAdapter)
         }
 
@@ -110,6 +116,9 @@ class MoviesFragment : BaseFragment() {
         //endregion
     }
 
+    /**
+     * called whenever a Movie item is clicked in the adapter, navigates to MovieDetails Fragment
+     */
     private fun movieOnClick(movie: Movie) {
         val navDirections =
             MoviesFragmentDirections.actionToMovieDetailsFragment(movie)

@@ -7,6 +7,9 @@ import com.example.swvl.data.source.repo.MovieRepo
 import com.example.swvl.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for handling Movie Details related ops
+ */
 class MovieDetailsViewModel(
     private val movieRepo: MovieRepo
 ) : BaseViewModel() {

@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.swvl.data.source.repo.MovieRepo
 import com.example.swvl.ui.viewModel.MoviesViewModel
 
+/**
+ * Factory class used to pass on MovieRepo as argument
+ */
 class MoviesViewModelFactory(
     private val movieRepo: MovieRepo
 ) : ViewModelProvider.Factory {

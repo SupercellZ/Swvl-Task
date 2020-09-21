@@ -3,6 +3,9 @@ package com.example.swvl.data.pojo
 import com.example.swvl.data.source.database.model.MovieModel
 import java.io.Serializable
 
+/**
+ * Used for communication between ViewModels & Repo & Activity & Adapter
+ */
 data class Movie(
     val title: String,
     val year: Int,

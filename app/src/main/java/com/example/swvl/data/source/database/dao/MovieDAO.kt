@@ -7,6 +7,9 @@ import androidx.room.Query
 import com.example.swvl.data.source.database.model.MovieModel
 
 @Dao
+/**
+ * DAO interface for Movie DB Ops
+ */
 interface MovieDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

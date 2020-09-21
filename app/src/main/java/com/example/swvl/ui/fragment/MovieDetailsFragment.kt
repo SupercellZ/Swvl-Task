@@ -17,9 +17,12 @@ import com.example.swvl.enums.FragType
 import com.example.swvl.utils.Utils.Companion.runWithCaution
 import kotlinx.android.synthetic.main.movie_details_fragment.*
 
+/**
+ * Fragment used to display a single Movie details
+ */
 class MovieDetailsFragment : BaseFragment() {
 
-    private lateinit var movie: Movie
+    private lateinit var movie: Movie //passed on as argument
 
     private lateinit var viewModel: MovieDetailsViewModel
 
@@ -55,6 +58,7 @@ class MovieDetailsFragment : BaseFragment() {
     }
 
     private fun setupViewModel() {
+        //region initialize
         val movieRepo = App.app.getMyComponent().getMovieRepo()
         viewModel = ViewModelProvider(
             this,
@@ -62,9 +66,11 @@ class MovieDetailsFragment : BaseFragment() {
                 movieRepo
             )
         ).get(MovieDetailsViewModel::class.java)
+        //endregion
 
         super.setupViewModel(viewModel, animation_view)
 
+        //display pics whenever they are updated
         viewModel.picUrls.observe(viewLifecycleOwner) {
 
             //setup adapter

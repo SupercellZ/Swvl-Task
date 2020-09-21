@@ -6,6 +6,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 
+
+//Extensions class to extend any type with the given method.
+
 fun Activity.hideKeyboard() {
     hideKeyboard(currentFocus ?: View(this))
 }

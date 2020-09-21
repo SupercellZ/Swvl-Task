@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
+/**
+ * Base class for ViewModel containing common functionality and simplifying the main setup for each ViewModel
+ */
 abstract class BaseViewModel : ViewModel() {
 
     //region loading LiveData
@@ -26,10 +29,10 @@ abstract class BaseViewModel : ViewModel() {
     protected fun hideLoading() {
         _loading.value = false
     }
-    //endregion
 
     protected fun loadingError() {
         _errorLoading.value = true
         _errorLoading.value = false
     }
+    //endregion
 }

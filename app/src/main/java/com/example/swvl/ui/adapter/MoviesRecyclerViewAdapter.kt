@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.swvl.R
 import com.example.swvl.data.pojo.Movie
 
+/**
+ * Used to display movies
+ */
 class MoviesRecyclerViewAdapter(
 
     private val onClick: Function1<Movie, Unit>,
@@ -48,6 +51,9 @@ class MoviesRecyclerViewAdapter(
         }
     }
 
+    /**
+     * used to filter movies based on the given criteria
+     */
     override fun getFilter(): Filter {
         val filter = object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -58,6 +64,7 @@ class MoviesRecyclerViewAdapter(
                     if (constraint.isNullOrEmpty())
                         items
                     else {
+                        //region filter items based on given title & restricted to top 5 movies for each year
                         val maxMoviesByYear = 5
                         val result: MutableList<Movie> = arrayListOf()
 
@@ -75,7 +82,7 @@ class MoviesRecyclerViewAdapter(
                         for (movie in filter) {
                             val list = map[movie.year] ?: arrayListOf()
 
-                            if (list.isEmpty()) //first element to be added
+                            if (list.isEmpty()) //first element to be added for this year
                                 list.add(movie)
                             else {
                                 if (list.size == maxMoviesByYear) { //list is full
@@ -83,15 +90,17 @@ class MoviesRecyclerViewAdapter(
                                     if (movie.rating > list.last().rating) { //replace last element only if current movie has better rating
 
                                         //region determine new element insertion index
-                                        val startIndex = list.size - 2 //start from 2nd element from bottom since we already evaluated last one.
+                                        val startIndex =
+                                            list.size - 2 //start from 2nd element from bottom since we already evaluated last one.
                                         for (i in startIndex downTo 0 step 1) {
                                             if (movie.rating > list[i].rating)
                                                 continue
-                                            list[i+1] = movie
+                                            //current item has higher rating, previous item was the target
+                                            list[i + 1] = movie
                                             break
                                         }
                                         //endregion
-                                    } //no else, not among top 5
+                                    } //no else, not among top 5 rated movies
 
                                 } else { //list size didn't reach max threshold yet
 
@@ -104,10 +113,11 @@ class MoviesRecyclerViewAdapter(
                         }
                         //endregion
 
-                        for (entry in map.toSortedMap().entries)
+                        for (entry in map.toSortedMap().entries) //loop on entries of map sorted by year ascendingly
                             result.addAll(entry.value)
 
                         result
+                        //endregion
                     }
                 Log.e("MoviesAdapter", "Finished filtering")
 
@@ -119,10 +129,14 @@ class MoviesRecyclerViewAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 results?.run {
-                    val values = results.values as? List<Movie>
-                    if (values != null) {
-                        filteredItems = values
-                        notifyDataSetChanged()
+                    try {
+                        val values = results.values as? List<Movie>
+                        if (values != null) {
+                            filteredItems = values
+                            notifyDataSetChanged()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
             }

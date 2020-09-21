@@ -11,6 +11,9 @@ import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Movie Repo acting as an intermediate layer between viewModels & Data sources, knowing how to communicate with each of them with its built-in logic.
+ */
 class MovieRepo(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource

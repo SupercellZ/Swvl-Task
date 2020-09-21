@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), ActivityComms {
 
-    private lateinit var currentFrag: FragType
-    private lateinit var searchView: SearchView
+    private lateinit var currentFrag: FragType //determines the current Fragment
+    private lateinit var searchView: SearchView //used for searching Movies by 'title'
 
-    private lateinit var filterMoviesCallback: (String) -> Unit
+    private lateinit var filterMoviesCallback: (String) -> Unit //communicates the text to be used for filtering movies back to Fragment.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +28,38 @@ class MainActivity : AppCompatActivity(), ActivityComms {
         setSupportActionBar(toolbar)
     }
 
+
+    /**
+     * Returns true if it was handled & close the SearchView, false otherwise
+     */
+    private fun closeSearchView(): Boolean {
+        var result = false
+        if (this::searchView.isInitialized && searchView.isIconified.not()) {
+            searchView.isIconified = true
+            result = true
+        }
+        return result
+    }
+
+
+    //region ActivityComms
     override fun currentFrag(fragType: FragType, title: String) {
         currentFrag = fragType
-        invalidateOptionsMenu()
+        invalidateOptionsMenu() //refreshes Menu creation
 
         supportActionBar?.run {
-            this.title = title
-            setDisplayHomeAsUpEnabled(fragType == FragType.MovieDetails)
+            this.title = title //displays the given title on Toolbar
+            setDisplayHomeAsUpEnabled(fragType == FragType.MovieDetails) //displays back button on Toolbar
         }
     }
 
     override fun setupFilterCallback(filterMoviesCallback: (String) -> Unit) {
         this.filterMoviesCallback = filterMoviesCallback
     }
+    //endregion
 
+
+    //region menu methods
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -81,21 +99,11 @@ class MainActivity : AppCompatActivity(), ActivityComms {
         }
         return super.onOptionsItemSelected(item)
     }
+    //endregion
+
 
     override fun onBackPressed() {
         if (closeSearchView().not())
             super.onBackPressed()
-    }
-
-    /**
-     * Returns true if it was handled & close the SearchView, false otherwise
-     */
-    private fun closeSearchView(): Boolean {
-        var result = false
-        if (this::searchView.isInitialized && searchView.isIconified.not()) {
-            searchView.isIconified = true
-            result = true
-        }
-        return result
     }
 }

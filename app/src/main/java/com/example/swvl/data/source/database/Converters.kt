@@ -3,6 +3,9 @@ package com.example.swvl.data.source.database
 import androidx.room.TypeConverter
 import java.util.*
 
+/**
+ * Used for converting complex data types to DB compatible ones & vice versa
+ */
 class Converters {
 
     @TypeConverter

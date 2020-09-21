@@ -6,6 +6,9 @@ import com.example.swvl.data.pojo.Movie
 
 
 @Entity(tableName = "Movie")
+/**
+ * "Movie" table in local DB
+ */
 data class MovieModel(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     val title: String,

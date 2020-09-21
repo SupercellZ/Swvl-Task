@@ -10,6 +10,9 @@ import com.example.swvl.App
 import com.example.swvl.R
 import com.example.swvl.utils.Utils.Companion.runWithCaution
 
+/**
+ * Adapter used to display each movie pics
+ */
 class MoviesPicsRecyclerViewAdapter(
 
     private val items: List<String>
@@ -28,7 +31,6 @@ class MoviesPicsRecyclerViewAdapter(
         runWithCaution({
             Glide.with(holder.itemView.context)
                 .load(item)
-                .thumbnail(0.9f)
                 .placeholder(R.drawable.pic_loading)
                 .into(holder.picIV)
         })

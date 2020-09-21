@@ -11,6 +11,9 @@ import com.example.swvl.enums.FragType
 import com.example.swvl.utils.Utils.Companion.runWithCaution
 import com.example.swvl.utils.callbacks.ActivityComms
 
+/**
+ * Base class for Fragments containing common functionality and simplifying the main setup for each Fragment
+ */
 abstract class BaseFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView

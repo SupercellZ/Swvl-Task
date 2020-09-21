@@ -1,6 +1,5 @@
 package com.example.swvl.di
 
-import com.example.swvl.data.source.database.AppDatabase
 import com.example.swvl.data.source.database.LocalDataSource
 import com.example.swvl.data.source.network.RemoteDataSource
 import com.example.swvl.data.source.repo.MovieRepo
@@ -13,6 +12,9 @@ import javax.inject.Singleton
         MyModule::class
     ]
 )
+/**
+ * Dagger Component which exposes methods to access all sorts of objects anywhere in the app
+ */
 interface MyComponent {
 
 
@@ -23,6 +25,6 @@ interface MyComponent {
     fun getRemoteDataSource(): RemoteDataSource
 
     @Singleton
-    fun getMovieRepo() : MovieRepo
+    fun getMovieRepo(): MovieRepo
 
 }

@@ -13,6 +13,9 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
+/**
+ * Dagger Module which specifies how to get each & every required dependency
+ */
 class MyModule {
 
     @Provides
