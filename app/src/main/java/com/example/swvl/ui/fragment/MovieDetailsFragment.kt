@@ -9,11 +9,11 @@ import androidx.lifecycle.observe
 import com.example.swvl.App
 import com.example.swvl.R
 import com.example.swvl.data.pojo.Movie
+import com.example.swvl.enums.FragType
 import com.example.swvl.ui.adapter.MoviesPicsRecyclerViewAdapter
 import com.example.swvl.ui.base.BaseFragment
 import com.example.swvl.ui.viewModel.MovieDetailsViewModel
 import com.example.swvl.ui.viewModel.factory.MovieDetailsViewModelFactory
-import com.example.swvl.enums.FragType
 import com.example.swvl.utils.Utils.Companion.runWithCaution
 import kotlinx.android.synthetic.main.movie_details_fragment.*
 
@@ -87,7 +87,20 @@ class MovieDetailsFragment : BaseFragment() {
         rating_tv.text = "${movie.rating.toFloat()}"
         materialRatingBar.rating = movie.rating.toFloat()
         year_tv.text = "${movie.year}"
+
+        genres_card.visibility =
+            if (movie.genres.isEmpty())
+                View.GONE
+            else
+                View.VISIBLE
         genres_tv.text = movie.genres.joinToString(separator = " - ")
+
+        cast_card.visibility =
+            if (movie.cast.isEmpty())
+                View.GONE
+            else
+                View.VISIBLE
+
         cast_tv.text = movie.cast.joinToString(separator = "\n")
 
         viewModel.loadPics(movie.title)
